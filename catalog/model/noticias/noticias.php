@@ -19,4 +19,14 @@ class ModelNoticiasNoticias extends Model {
 		return $query->row;
 	}
 
+	public function getComentarioNoticia($data) {
+		$query = $this->db->query("SELECT * FROM ". DB_PREFIX ."comentarios WHERE noticia='".$data."' AND status='1' ORDER BY id_comentario DESC");
+
+		return $query->rows;
+	}
+
+	public function setComentario($data) {
+		$this->db->query("INSERT INTO ". DB_PREFIX ."comentarios (nome, comentario, noticia, usuario, status) VALUES ('".$data['nome']."', '".$data['comentario']."', '".$data['noticia']."', '".$data['usuario']."', '0')");
+	}
+
 }

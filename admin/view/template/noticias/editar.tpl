@@ -28,36 +28,49 @@
 
             <div class="form-group">
               <label>Título</label>
-              <input type="text" name="titulo" class="form-control" value="<?php echo $noticia['titulo']; ?>" required>
+              <input type="text" name="titulo" class="form-control" value="<?php echo $noticia['titulo']; ?>" maxlength="52" required>
             </div>
 
             <div class="form-group">
               <label>Capa</label>
               <input type="file" name="capa" class="form-control">
+              <div style="margin-top:10px;">
+                Tamanho exato: 360 x 202 em JPG
+              </div>
             </div>
+
+            <style>
+              #remover-capa:hover{
+                cursor: pointer;
+                opacity: 0.5;
+              }
+            </style>
 
             <?php if($noticia['capa'] != null){ ?>
               <div class="form-group" id="proposta-callback">
-                <div class="teste">
-                  <img src="../image/<?php echo $noticia['capa']; ?>" class="img-responsive img-vertical">
-                  <div id="remover-capa" class="remover"><img src="../image/delete.png" class="img-responsive"></div>
-                </div>
+                  <div style="display:inline-block;vertical-align:middle;">
+                    <img src="../image/<?php echo $noticia['capa']; ?>" width="360" heigh="202" class="img-responsive img-vertical">
+                  </div>
+                  <div style="display:inline-block;vertical-align:middle;">
+                    <div id="remover-capa"><img src="../image/delete.png" class="img-responsive"></div>
+                  </div>
+                  <div style="clear:both"></div>
               </div>
             <?php } ?>
 
             <div class="form-group">
               <label>Resumo</label>
-              <textarea name="resumo" id="resumo"><?php echo $noticia['resumo']; ?></textarea>
+              <textarea name="resumo" maxlength="189" class="form-control"><?php echo $noticia['resumo']; ?></textarea>
             </div>
 
             <div class="form-group">
-              <label>Notícia</label>
+              <label>Conteúdo</label>
               <textarea name="noticia" id="noticia"><?php echo $noticia['noticia']; ?></textarea>
             </div>
 
             <div class="form-group">
               <input type="hidden" name="id_noticia" value="<?php echo $noticia['id_noticia']; ?>">
-              <button type="submit" class="btn btn-primary">Cadastrar</button>
+              <button type="submit" class="btn btn-primary">Atualizar</button>
             </div>
 
           </form>
@@ -71,10 +84,6 @@
 <script type="text/javascript">
 
   $('#noticia').summernote({
-    height: 300
-  });
-
-  $('#resumo').summernote({
     height: 300
   });
 

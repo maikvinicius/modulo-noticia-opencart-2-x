@@ -28,21 +28,24 @@
 
             <div class="form-group">
               <label>Título</label>
-              <input type="text" name="titulo" class="form-control" required>
+              <input type="text" name="titulo" class="form-control" maxlength="52" required>
             </div>
 
             <div class="form-group">
               <label>Capa</label>
               <input type="file" name="capa" class="form-control" required>
+              <div style="margin-top:10px;">
+                Tamanho exato: 360 x 202 em JPG
+              </div>
             </div>
 
             <div class="form-group">
               <label>Resumo</label>
-              <textarea name="resumo" id="resumo"></textarea>
+              <textarea name="resumo" maxlength="189" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
-              <label>Notícia</label>
+              <label>Conteúdo</label>
               <textarea name="noticia" id="noticia"></textarea>
             </div>
 
@@ -61,10 +64,6 @@
 <script type="text/javascript">
 
   $('#noticia').summernote({
-    height: 300
-  });
-
-  $('#resumo').summernote({
     height: 300
   });
 

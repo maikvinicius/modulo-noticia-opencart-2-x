@@ -30,7 +30,7 @@ class ControllerNoticiasHome extends Controller {
 
 	public function cadastro() {
 
-		$this->document->setTitle('Cadastro de Notícias');
+		$this->document->setTitle('Cadastro de Notícia');
 		$this->load->model('noticias/home');
 
 		$data['action'] = $this->url->link('noticias/home/cadastro', 'token=' . $this->session->data['token'], 'SSL');
@@ -55,7 +55,7 @@ class ControllerNoticiasHome extends Controller {
 
 	public function editar() {
 
-		$this->document->setTitle('Cadastro de Notícias');
+		$this->document->setTitle('Editar Notícia');
 		$this->load->model('noticias/home');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -81,6 +81,23 @@ class ControllerNoticiasHome extends Controller {
 
 	}
 
+	public function comentarios() {
+
+		$this->document->setTitle('Comentários');
+		$this->load->model('noticias/home');
+
+		$data['comentarios'] = $this->model_noticias_home->getComentarios($this->request->get['id']);
+
+		$data['token'] = $this->session->data['token'];
+		$data['heading_title'] = 'Comentários';
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('noticias/comentarios.tpl', $data));
+
+	}
+
 	public function deletaCapa($json){
 
 		$this->load->model('noticias/home');
@@ -88,6 +105,23 @@ class ControllerNoticiasHome extends Controller {
 		$id_noticia = $this->request->post['id_noticia'];
 
 		$this->model_noticias_home->deleteCapa($id_noticia);
+
+		$json = array(
+			'sucesso' => 'ok'
+		);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+	}
+
+	public function deletarnoticia($json){
+
+		$this->load->model('noticias/home');
+
+		$id_noticia = $this->request->post['id_noticia'];
+
+		$this->model_noticias_home->deletarNoticia($id_noticia);
 
 		$json = array(
 			'sucesso' => 'ok'
@@ -118,6 +152,36 @@ class ControllerNoticiasHome extends Controller {
 		$this->load->model('noticias/home');
 
 		$this->model_noticias_home->desabilitar($this->request->post['id_noticia']);
+
+		$json = array(
+			'sucesso' => 'ok'
+		);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+	}
+
+	public function habilitarComentario(){
+
+		$this->load->model('noticias/home');
+
+		$this->model_noticias_home->habilitarComentario($this->request->post['id_comentario']);
+
+		$json = array(
+			'sucesso' => 'ok'
+		);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+
+	}
+
+	public function desabilitarComentario(){
+
+		$this->load->model('noticias/home');
+
+		$this->model_noticias_home->desabilitarComentario($this->request->post['id_comentario']);
 
 		$json = array(
 			'sucesso' => 'ok'

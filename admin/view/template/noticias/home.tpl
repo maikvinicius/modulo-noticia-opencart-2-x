@@ -30,13 +30,19 @@
 
                 <?php foreach ($noticias as $noticia) { ?>
 
-                <tr>
+                <tr id="noticia<?php echo $noticia['id_noticia']; ?>">
                   <td><?php echo $noticia['titulo']; ?></td>
                   <td><?php echo $noticia['data_postada']; ?></td>
                   <td><div id="div_btn<?php echo $noticia['id_noticia']; ?>"><?php echo ($noticia['status'] == 0) ? '<button class="btn btn-danger" onclick="habilitar('.$noticia['id_noticia'].');">Desabilitado</button>' : '<button class="btn btn-success" onclick="desabilitar('.$noticia['id_noticia'].')">Habilitado</button>'; ?></div></td>
                   <td>
                     <a href="<?php echo $noticia['link']; ?>" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Editar">
                       <i class="fa fa-pencil"></i>
+                    </a>
+                    <a data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Deletar" onclick="deletar(<?php echo $noticia['id_noticia']; ?>)">
+                      <i class="fa fa-trash-o"></i>
+                    </a>
+                    <a href="index.php?route=noticias/home/comentarios&id=<?php echo $noticia['id_noticia']; ?>&token=<?php echo $token;?>" data-toggle="tooltip" title="" class="btn btn-warning" data-original-title="Comentários">
+                      <i class="fa fa-comment-o"></i>
                     </a>
                   </td>
                 </tr>
@@ -101,6 +107,35 @@ function desabilitar(id){
    request.fail(function(jqXHR, textStatus) {//caso haja erro
      alert( "Falha: " + textStatus );
    });
+
+}
+
+function deletar(id){
+
+  var txt;
+  var r = confirm("Você realmente deseja excluir esta Notícia?");
+  if (r == true) {
+
+    var request = $.ajax({//post
+      url: "index.php?route=noticias/home/deletarnoticia&token=<?php echo $token; ?>",
+      type: "POST",
+      data: {"id_noticia": id},
+      dataType: "json"
+    });
+
+    request.done(function(data) {//verifica o resultado
+      console.log(data);
+      $("#noticia"+id).remove();
+      alert('Notícia excluida com Sucesso!');
+    });
+
+    request.fail(function(jqXHR, textStatus) {//caso haja erro
+      alert( "Falha: " + textStatus );
+    });
+
+  } else {
+
+  }
 
 }
 

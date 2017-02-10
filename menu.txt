@@ -1,0 +1,16 @@
+// Controller
+
+$data['text_noticias'] = $this->language->get('text_noticias');
+
+$data['noticias'] = $this->url->link('noticias/home', 'token=' . $this->session->data['token'], 'SSL');
+
+// Language
+
+$_['text_noticias']                    = 'Notícias';
+
+
+// View
+
+<li id="noticias"><a href="<?php echo $noticias; ?>"><i class="fa fa-newspaper-o fa-fw"></i> <span><?php echo $text_noticias; ?></span></a></li>
+
+// Desenvolvido por Maik Vinícius - https://br.linkedin.com/in/maikvinicius

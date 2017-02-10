@@ -7,6 +7,12 @@ class ModelNoticiasHome extends Model {
     return $query->rows;
   }
 
+  public function getComentarios($data){
+    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "comentarios WHERE noticia = '".$data."' ORDER BY id_comentario DESC");
+
+    return $query->rows;
+  }
+
   public function getNoticia($data){
     $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "noticia WHERE id_noticia='".(int) $data."'");
 
@@ -15,6 +21,11 @@ class ModelNoticiasHome extends Model {
 
   public function deleteCapa($data){
     $this->db->query("UPDATE " . DB_PREFIX . "noticia SET capa = null WHERE id_noticia='".(int) $data."'");
+  }
+
+  public function deletarNoticia($data){
+    $this->db->query("DELETE FROM " . DB_PREFIX . "noticia WHERE id_noticia='".$data."'");
+    $this->db->query("DELETE FROM " . DB_PREFIX . "comentarios WHERE noticia='".$data."'");
   }
 
   public function updateNoticia($data, $files) {
@@ -111,6 +122,14 @@ class ModelNoticiasHome extends Model {
 
   public function desabilitar($data) {
     $this->db->query("UPDATE " . DB_PREFIX . "noticia SET status='0' WHERE id_noticia='".(int)$data."'");
+  }
+
+  public function habilitarComentario($data) {
+    $this->db->query("UPDATE " . DB_PREFIX . "comentarios SET status='1' WHERE id_comentario='".(int)$data."'");
+  }
+
+  public function desabilitarComentario($data) {
+    $this->db->query("UPDATE " . DB_PREFIX . "comentarios SET status='0' WHERE id_comentario='".(int)$data."'");
   }
 
 }
